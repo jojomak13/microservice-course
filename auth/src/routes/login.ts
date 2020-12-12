@@ -23,6 +23,7 @@ router.post(
     if (!user) {
       throw new BadRequestError('Invalid Credentials');
     }
+
     const isValid = await Password.compare(user.password, password);
 
     if (!isValid) {
