@@ -2,17 +2,17 @@ import { useState } from 'react';
 import Router from 'next/router';
 import useRequest from '../../hooks/useRequest';
 
-const signup = () => {
+const login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { doRequest, errors } = useRequest({
-    url: '/api/users/signup',
+    url: '/api/users/login',
     method: 'post',
     body: { email, password },
     onSuccess: () => Router.push('/'),
   });
 
-  const signup = async (e) => {
+  const login = async (e) => {
     e.preventDefault();
     doRequest();
   };
@@ -21,10 +21,10 @@ const signup = () => {
     <div className="row justify-content-center mt-3">
       <div className="col-md-8">
         <div className="card">
-          <div className="card-header">Signup Page</div>
+          <div className="card-header">Login Page</div>
           <div className="card-body">
             {errors}
-            <form onSubmit={signup}>
+            <form onSubmit={login}>
               <div className="form-group">
                 <label htmlFor="email">Email</label>
                 <input
@@ -47,7 +47,7 @@ const signup = () => {
               </div>
               <div className="form-group">
                 <button type="submit" className="btn btn-primary">
-                  Signup
+                  Login
                 </button>
               </div>
             </form>
@@ -58,4 +58,4 @@ const signup = () => {
   );
 };
 
-export default signup;
+export default login;
