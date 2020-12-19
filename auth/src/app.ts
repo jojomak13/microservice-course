@@ -1,9 +1,8 @@
 import express from 'express';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
+import { errorHandler, NotFoundError } from '@jmtickt/common';
 import router from './routes';
-import { errorHandler } from './middlewares/errorHandler';
-import NotFoundError from './errors/NotFoundError';
 
 const app = express();
 app.set('trust proxy', true);

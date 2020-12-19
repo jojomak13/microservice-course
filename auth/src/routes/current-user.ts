@@ -1,6 +1,5 @@
 import express from 'express';
-import auth from '../middlewares/auth';
-import currentUser from '../middlewares/currentUser';
+import { currentUser, auth } from '@jmtickt/common';
 
 const router = express.Router();
 
