@@ -16,6 +16,8 @@ spec:
         - name: tickets
           image: jojomak/tickets
           env:
+            - name: MONGO_URI
+              value: 'mongodb://tickets-mongo-service:27017/tickets'
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:

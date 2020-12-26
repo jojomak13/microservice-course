@@ -1,7 +1,7 @@
 import express from 'express';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
-import { errorHandler, NotFoundError } from '@jmtickt/common';
+import { errorHandler, NotFoundError, currentUser } from '@jmtickt/common';
 import router from './routes';
 
 const app = express();
@@ -13,6 +13,8 @@ app.use(
     secure: process.env.NODE_ENV !== 'test',
   })
 );
+
+app.use(currentUser);
 
 // Register Router
 app.use('/api', router);
