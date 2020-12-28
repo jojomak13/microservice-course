@@ -10,6 +10,10 @@ spec:
     - host: tickets.test
       http:
         paths:
+          - path: /api/tickets/?(.*)
+            backend:
+              serviceName: tickets-service
+              servicePort: 3000
           - path: /api/users/?(.*)
             backend:
               serviceName: auth-service
