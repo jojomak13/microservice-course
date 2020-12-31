@@ -1,6 +1,6 @@
 import { Message } from 'node-nats-streaming';
 import { Listener } from './Listener';
-import { Subjects } from './subjects';
+import { Subjects } from './Subjects';
 import { TicketCreatedEvent } from './TicketCreatedEvent';
 
 class TicketCreatedListener extends Listener<TicketCreatedEvent> {
