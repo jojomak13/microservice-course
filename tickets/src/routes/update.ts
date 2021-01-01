@@ -6,7 +6,9 @@ import {
 } from '@jmtickt/common';
 import { Router, Request, Response } from 'express';
 import { body } from 'express-validator';
+import { TicketUpdatedPublisher } from '../events/publishers/TicketUpdatedPublisher';
 import Ticket from '../models/Ticket';
+import { natsWrapper } from '../natsWrapper';
 
 const router = Router();
 
@@ -36,6 +38,13 @@ router.put(
       price: req.body.price,
     });
     await ticket.save();
+
+    new TicketUpdatedPublisher(natsWrapper.client).publish({
+      id: ticket.id,
+      title: ticket.title,
+      price: ticket.price,
+      userId: ticket.userId,
+    });
 
     res.send(ticket);
   }
