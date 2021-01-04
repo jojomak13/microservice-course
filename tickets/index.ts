@@ -3,19 +3,25 @@ import app from './src/app';
 import { natsWrapper } from './src/natsWrapper';
 
 const start = async () => {
-  if (!process.env.JWT_KEY) {
-    throw new Error('[JWT_KEY] not found');
-  }
+  const envKeys = [
+    'JWT_KEY',
+    'MONGO_URI',
+    'NATS_CLUSTER_ID',
+    'NATS_CLIENT_ID',
+    'NATS_URL',
+  ];
 
-  if (!process.env.MONGO_URI) {
-    throw new Error('[MONGO_URI] not found');
+  for (let key of envKeys) {
+    if (!process.env[key]) {
+      throw new Error(`[${key}] not found`);
+    }
   }
 
   try {
     await natsWrapper.connect(
-      'ticketing',
-      'sdfsfd',
-      'http://nats-service:4222'
+      process.env.NATS_CLUSTER_ID!,
+      process.env.NATS_CLIENT_ID!,
+      process.env.NATS_URL!
     );
     console.log('[info] nats connection open.');
 
@@ -27,7 +33,7 @@ const start = async () => {
     process.on('SIGINT', () => natsWrapper.client.close());
     process.on('SIGTERM', () => natsWrapper.client.close());
 
-    await mongoose.connect(process.env.MONGO_URI, {
+    await mongoose.connect(process.env.MONGO_URI!, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
