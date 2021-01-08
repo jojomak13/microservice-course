@@ -2,6 +2,7 @@ import { Router, Request, Response } from 'express';
 import {
   auth,
   BadRequestError,
+  currentUser,
   NotFoundError,
   OrderStatus,
   validateRequest,
@@ -18,6 +19,7 @@ const EXPIRATION_TIME = 15 * 60;
 router.post(
   '/',
   auth,
+  currentUser,
   [
     body('ticketId')
       .not()
