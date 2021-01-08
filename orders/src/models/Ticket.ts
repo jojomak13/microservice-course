@@ -1,4 +1,5 @@
 import mongoose, { Schema, model } from 'mongoose';
+import Order, { OrderStatus } from './Order';
 
 interface ITicket {
   title: string;
@@ -8,6 +9,7 @@ interface ITicket {
 export interface TicketDocument extends mongoose.Document {
   title: string;
   price: number;
+  isReserved(): Promise<boolean>;
 }
 
 interface TicketModel extends mongoose.Model<TicketDocument> {
@@ -38,6 +40,26 @@ const ticketSchema = new Schema(
 
 ticketSchema.statics.build = (attrs: ITicket) => {
   return new Ticket(attrs);
+};
+
+/**
+ *  make sure that there is no order with this ticket and not *cancelled*
+ * @param none
+ * @returns Promise<boolean>
+ */
+ticketSchema.methods.isReserved = async function () {
+  const orderExist = await Order.findOne({
+    ticket: this,
+    status: {
+      $in: [
+        OrderStatus.AwaitPayment,
+        OrderStatus.Complete,
+        OrderStatus.Created,
+      ],
+    },
+  });
+
+  return orderExist;
 };
 
 const Ticket = model<TicketDocument, TicketModel>('Ticket', ticketSchema);
