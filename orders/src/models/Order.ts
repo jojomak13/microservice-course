@@ -12,6 +12,7 @@ interface IOrder {
 }
 
 interface OrderDocument extends mongoose.Document {
+  id: string;
   userId: string;
   status: OrderStatus;
   expiresAt: Date;

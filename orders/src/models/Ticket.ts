@@ -7,6 +7,7 @@ interface ITicket {
 }
 
 export interface TicketDocument extends mongoose.Document {
+  id: string;
   title: string;
   price: number;
   isReserved(): Promise<boolean>;
