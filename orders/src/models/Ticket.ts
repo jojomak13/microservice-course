@@ -1,7 +1,9 @@
 import mongoose, { Schema, model } from 'mongoose';
+import { addSyntheticTrailingComment } from 'typescript';
 import Order, { OrderStatus } from './Order';
 
 interface ITicket {
+  id: string;
   title: string;
   price: number;
 }
@@ -40,7 +42,11 @@ const ticketSchema = new Schema(
 );
 
 ticketSchema.statics.build = (attrs: ITicket) => {
-  return new Ticket(attrs);
+  return new Ticket({
+    _id: attrs.id,
+    title: attrs.title,
+    price: attrs.price,
+  });
 };
 
 /**
@@ -60,7 +66,7 @@ ticketSchema.methods.isReserved = async function () {
     },
   });
 
-  return orderExist;
+  return !!orderExist;
 };
 
 const Ticket = model<TicketDocument, TicketModel>('Ticket', ticketSchema);
