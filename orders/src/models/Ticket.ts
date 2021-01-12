@@ -1,5 +1,5 @@
 import mongoose, { Schema, model } from 'mongoose';
-import { addSyntheticTrailingComment } from 'typescript';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import Order, { OrderStatus } from './Order';
 
 interface ITicket {
@@ -12,6 +12,7 @@ export interface TicketDocument extends mongoose.Document {
   id: string;
   title: string;
   price: number;
+  version: number;
   isReserved(): Promise<boolean>;
 }
 
@@ -41,6 +42,9 @@ const ticketSchema = new Schema(
   }
 );
 
+ticketSchema.set('versionKey', 'version');
+ticketSchema.plugin(updateIfCurrentPlugin);
+
 ticketSchema.statics.build = (attrs: ITicket) => {
   return new Ticket({
     _id: attrs.id,
@@ -54,7 +58,7 @@ ticketSchema.statics.build = (attrs: ITicket) => {
  * @param none
  * @returns Promise<boolean>
  */
-ticketSchema.methods.isReserved = async function () {
+ticketSchema.methods.isReserved = async () => {
   const orderExist = await Order.findOne({
     ticket: this,
     status: {
