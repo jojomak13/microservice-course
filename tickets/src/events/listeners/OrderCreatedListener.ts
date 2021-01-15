@@ -17,7 +17,7 @@ class OrderCreatedListener extends Listener<OrderCreatedEvent> {
     }
 
     // mark the ticket as reserved
-    ticket.set({ oderId: data.id });
+    ticket.set({ orderId: data.id });
     await ticket.save();
 
     // ack the message
