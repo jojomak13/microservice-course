@@ -1,12 +1,12 @@
 import request from 'supertest';
-import mongoose from 'mongoose';
+import { Types } from 'mongoose';
 import app from '../../app';
 import Ticket from '../../models/Ticket';
 import Order, { OrderStatus } from '../../models/Order';
 import { natsWrapper } from '../../natsWrapper';
 
 it('returns 404 if the ticket does not exists', async () => {
-  const ticketId = mongoose.Types.ObjectId().toHexString();
+  const ticketId = Types.ObjectId().toHexString();
 
   await request(app)
     .post('/api/orders')
@@ -17,6 +17,7 @@ it('returns 404 if the ticket does not exists', async () => {
 
 it('returns an error if the tickt reserved before', async () => {
   const ticket = Ticket.build({
+    id: Types.ObjectId().toHexString(),
     title: 'ticket title',
     price: 452,
   });
@@ -39,6 +40,7 @@ it('returns an error if the tickt reserved before', async () => {
 
 it('reserve a ticket', async () => {
   const ticket = Ticket.build({
+    id: Types.ObjectId().toHexString(),
     title: 'ticket title',
     price: 452,
   });
@@ -53,6 +55,7 @@ it('reserve a ticket', async () => {
 
 it('emits an order:created event', async () => {
   const ticket = Ticket.build({
+    id: Types.ObjectId().toHexString(),
     title: 'ticket title',
     price: 452,
   });

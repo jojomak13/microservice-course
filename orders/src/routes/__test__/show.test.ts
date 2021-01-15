@@ -1,10 +1,14 @@
 import request from 'supertest';
+import { Types } from 'mongoose';
 import app from '../../app';
-import Order from '../../models/Order';
 import Ticket from '../../models/Ticket';
 
 it('returns an error 401 if another user try to fetch another order', async () => {
-  const ticket = Ticket.build({ title: 'ticket title', price: 45 });
+  const ticket = Ticket.build({
+    id: Types.ObjectId().toHexString(),
+    title: 'ticket title',
+    price: 45,
+  });
   await ticket.save();
 
   const { body: order } = await request(app)
@@ -21,7 +25,11 @@ it('returns an error 401 if another user try to fetch another order', async () =
 });
 
 it('returns an order', async () => {
-  const ticket = Ticket.build({ title: 'ticket title', price: 45 });
+  const ticket = Ticket.build({
+    id: Types.ObjectId().toHexString(),
+    title: 'ticket title',
+    price: 45,
+  });
   await ticket.save();
 
   const user = global.signin();

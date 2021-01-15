@@ -1,6 +1,7 @@
 import mongoose, { model, Schema } from 'mongoose';
 import { OrderStatus } from '@jmtickt/common';
 import { TicketDocument } from './Ticket';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 export { OrderStatus };
 
@@ -16,6 +17,7 @@ interface OrderDocument extends mongoose.Document {
   userId: string;
   status: OrderStatus;
   expiresAt: Date;
+  version: number;
   ticket: TicketDocument;
 }
 
@@ -52,6 +54,9 @@ const orderSchema = new Schema(
     },
   }
 );
+
+orderSchema.set('versionKey', 'version');
+orderSchema.plugin(updateIfCurrentPlugin);
 
 orderSchema.statics.build = (attrs: IOrder) => {
   return new Order(attrs);
