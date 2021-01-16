@@ -33,6 +33,10 @@ router.put(
       throw new BadRequestError('Not Authorized', 401);
     }
 
+    if (ticket.orderId) {
+      throw new BadRequestError('Cannot edit a reserved ticket');
+    }
+
     ticket.set({
       title: req.body.title,
       price: req.body.price,
