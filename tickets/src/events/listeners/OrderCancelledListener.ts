@@ -1,14 +1,14 @@
-import { Listener, OrderCreatedEvent, Subjects } from '@jmtickt/common';
+import { Listener, OrderCancelledEvent, Subjects } from '@jmtickt/common';
 import { Message } from 'node-nats-streaming';
 import Ticket from '../../models/Ticket';
 import { TicketUpdatedPublisher } from '../publishers/TicketUpdatedPublisher';
 import { queueGroupName } from '../queueGroupName';
 
-class OrderCreatedListener extends Listener<OrderCreatedEvent> {
+class OrderCancelledListener extends Listener<OrderCancelledEvent> {
   readonly subject = Subjects.OrderCreated;
   queueGroupName = queueGroupName;
 
-  async onMessage(data: OrderCreatedEvent['data'], msg: Message) {
+  async onMessage(data: OrderCancelledEvent['data'], msg: Message) {
     // find the ticket that the order is reserving
     const ticket = await Ticket.findById(data.ticket.id);
 
@@ -17,8 +17,8 @@ class OrderCreatedListener extends Listener<OrderCreatedEvent> {
       throw new Error('Ticket not found');
     }
 
-    // mark the ticket as reserved
-    ticket.set({ orderId: data.id });
+    // mark the ticket opened again
+    ticket.set({ orderId: undefined });
     await ticket.save();
 
     // publish new event with [ticketUpdatedPublisher]
@@ -36,4 +36,4 @@ class OrderCreatedListener extends Listener<OrderCreatedEvent> {
   }
 }
 
-export { OrderCreatedListener };
+export { OrderCancelledListener };
