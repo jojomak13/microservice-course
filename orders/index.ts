@@ -51,7 +51,7 @@ const start = async () => {
 
   const port = process.env.PORT || 8080;
   app.listen(port, () => {
-    console.log(`[Auth Service] Running on port ${port}`);
+    console.log(`[Orders Service] Running on port ${port}`);
   });
 };
 
