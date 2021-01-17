@@ -1,7 +1,13 @@
+import { OrderCreatedListener } from './src/events/listeners/OrderCreatedListener';
 import { natsWrapper } from './src/natsWrapper';
 
 const start = async () => {
-  const envKeys = ['NATS_CLUSTER_ID', 'NATS_CLIENT_ID', 'NATS_URL'];
+  const envKeys = [
+    'NATS_CLUSTER_ID',
+    'NATS_CLIENT_ID',
+    'NATS_URL',
+    'REDIS_HOST',
+  ];
 
   for (let key of envKeys) {
     if (!process.env[key]) {
@@ -24,6 +30,8 @@ const start = async () => {
 
     process.on('SIGINT', () => natsWrapper.client.close());
     process.on('SIGTERM', () => natsWrapper.client.close());
+
+    new OrderCreatedListener(natsWrapper.client).listen();
   } catch (err) {
     console.log(err);
   }
