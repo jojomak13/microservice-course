@@ -1,5 +1,5 @@
-import { OrderCreatedListener } from './src/events/listeners/OrderCreatedListener';
-import { natsWrapper } from './src/natsWrapper';
+import { OrderCreatedListener } from './events/listeners/OrderCreatedListener';
+import { natsWrapper } from './natsWrapper';
 
 const start = async () => {
   const envKeys = [
