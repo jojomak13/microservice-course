@@ -52,7 +52,7 @@ const start = async () => {
 
   const port = process.env.PORT || 8080;
   app.listen(port, () => {
-    console.log(`[Tickets Service] Running on port ${port}`);
+    console.log(`[Payments Service] Running on port ${port}`);
   });
 };
 
