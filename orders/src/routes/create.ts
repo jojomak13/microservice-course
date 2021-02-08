@@ -21,7 +21,6 @@ const EXPIRATION_TIME = 15 * 60;
 router.post(
   '/',
   auth,
-  currentUser,
   [
     body('ticketId')
       .not()

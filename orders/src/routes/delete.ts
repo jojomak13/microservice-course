@@ -12,37 +12,32 @@ import { natsWrapper } from '../natsWrapper';
 
 const router = Router();
 
-router.delete(
-  '/:orderId',
-  auth,
-  currentUser,
-  async (req: Request, res: Response) => {
-    const { orderId } = req.params;
+router.delete('/:orderId', auth, async (req: Request, res: Response) => {
+  const { orderId } = req.params;
 
-    const order = await Order.findById(orderId).populate('ticket');
+  const order = await Order.findById(orderId).populate('ticket');
 
-    if (!order) {
-      throw new NotFoundError();
-    }
-
-    if (order.userId !== req.user!.id) {
-      throw new BadRequestError('not authorized', 401);
-    }
-
-    order.status = OrderStatus.Canelled;
-    await order.save();
-
-    // publish an event that order cancelled
-    new OrderCancelledPublisher(natsWrapper.client).publish({
-      id: order.id,
-      version: order.version,
-      ticket: {
-        id: order.ticket.id,
-      },
-    });
-
-    res.status(204).send(order);
+  if (!order) {
+    throw new NotFoundError();
   }
-);
+
+  if (order.userId !== req.user!.id) {
+    throw new BadRequestError('not authorized', 401);
+  }
+
+  order.status = OrderStatus.Canelled;
+  await order.save();
+
+  // publish an event that order cancelled
+  new OrderCancelledPublisher(natsWrapper.client).publish({
+    id: order.id,
+    version: order.version,
+    ticket: {
+      id: order.ticket.id,
+    },
+  });
+
+  res.status(204).send(order);
+});
 
 export { router as DeleteOrderRouter };
