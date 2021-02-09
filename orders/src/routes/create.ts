@@ -16,7 +16,7 @@ import { natsWrapper } from '../natsWrapper';
 
 const router = Router();
 
-const EXPIRATION_TIME = 15 * 60;
+const EXPIRATION_TIME = 1 * 60;
 
 router.post(
   '/',
