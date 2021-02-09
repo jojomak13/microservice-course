@@ -11,6 +11,7 @@ const start = async () => {
     'NATS_CLUSTER_ID',
     'NATS_CLIENT_ID',
     'NATS_URL',
+    'STRIPE_KEY',
   ];
 
   for (let key of envKeys) {
