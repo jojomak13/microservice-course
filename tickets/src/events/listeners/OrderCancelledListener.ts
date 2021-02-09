@@ -5,7 +5,7 @@ import { TicketUpdatedPublisher } from '../publishers/TicketUpdatedPublisher';
 import { queueGroupName } from '../queueGroupName';
 
 class OrderCancelledListener extends Listener<OrderCancelledEvent> {
-  readonly subject = Subjects.OrderCreated;
+  readonly subject = Subjects.OrderCancelled;
   queueGroupName = queueGroupName;
 
   async onMessage(data: OrderCancelledEvent['data'], msg: Message) {
