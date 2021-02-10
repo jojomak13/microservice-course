@@ -2,14 +2,15 @@ import axios from 'axios';
 
 const _serverClient = (req) => {
   return axios.create({
-    baseURL: 'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local',
+    baseURL:
+      'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local/api',
     headers: req.headers,
   });
 };
 
 const _browserCLient = () => {
   return axios.create({
-    baseURL: '/',
+    baseURL: '/api',
   });
 };
 

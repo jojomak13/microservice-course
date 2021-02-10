@@ -1,5 +1,3 @@
-import buildClient from '../api/buildClient';
-
 const index = ({ user }) => {
   return (
     <div>
@@ -9,13 +7,8 @@ const index = ({ user }) => {
   );
 };
 
-index.getInitialProps = async (context) => {
-  try {
-    let { data } = await buildClient(context).get('/api/users/currentuser');
-    return data;
-  } catch (err) {
-    return { user: null };
-  }
+index.getInitialProps = async (context, client, user) => {
+  return {};
 };
 
 export default index;

@@ -3,7 +3,7 @@ import { currentUser, auth } from '@jmtickt/common';
 
 const router = express.Router();
 
-router.get('/currentuser', currentUser, auth, (req, res) => {
+router.get('/currentuser', currentUser, (req, res) => {
   res.send({ user: req.user || null });
 });
 
