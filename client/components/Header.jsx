@@ -4,6 +4,7 @@ const Header = ({ user }) => {
   let links = [
     !user && { label: 'Login', href: '/auth/login' },
     !user && { label: 'Signup', href: '/auth/signup' },
+    user && { label: 'New Ticket', href: '/tickets/new' },
     user && { label: 'logout', href: '/auth/logout' },
   ]
     .filter((link) => link)
