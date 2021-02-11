@@ -25,7 +25,7 @@ const TicketShow = ({ ticket }) => {
             </h4>
           </div>
           <div className="card-footer text-center">
-            <button onClick={doRequest} className="btn btn-success">
+            <button onClick={() => doRequest()} className="btn btn-success">
               Purchase
             </button>
           </div>

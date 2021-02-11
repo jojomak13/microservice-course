@@ -5,10 +5,10 @@ import Error from '../components/Error';
 const useRequest = ({ url, method, body, onSuccess }) => {
   const [errors, setErrors] = useState(null);
 
-  const doRequest = async () => {
+  const doRequest = async (extraBody = {}) => {
     try {
       setErrors(null);
-      const response = await axios[method](url, body);
+      const response = await axios[method](url, { ...body, ...extraBody });
 
       if (onSuccess) onSuccess(response.data);
 
