@@ -7,7 +7,10 @@ const router = Router();
 router.get('/', auth, currentUser, async (req: Request, res: Response) => {
   const orders = await Order.find({
     userId: req.user!.id,
-  }).populate('ticket');
+  })
+    .populate('ticket')
+    .sort({ _id: 'desc' })
+    .exec();
 
   res.send(orders);
 });

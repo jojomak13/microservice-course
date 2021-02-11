@@ -30,7 +30,6 @@ const index = ({ user, tickets }) => {
         </thead>
         <tbody>{mapTickets}</tbody>
       </table>
-      {user ? <p>Welcome, {user.email}</p> : <p>You are not logedin</p>}
     </div>
   );
 };
