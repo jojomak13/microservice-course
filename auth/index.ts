@@ -1,13 +1,13 @@
 import mongoose from 'mongoose';
 import app from './src/app';
 
+const envKeys = ['JWT_KEY', 'MONGO_URI'];
+
+for (let key of envKeys) {
+  if (!process.env[key]) throw new Error(`[${key}] not found`);
+}
+
 const start = async () => {
-  const keys = ['JWT_KEY', 'MONGO_URI'];
-
-  for (let key of keys) {
-    if (!process.env[key]) throw new Error(`[${key}] not found`);
-  }
-
   try {
     await mongoose.connect(process.env.MONGO_URI!, {
       useNewUrlParser: true,
