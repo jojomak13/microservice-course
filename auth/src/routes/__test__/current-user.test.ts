@@ -12,6 +12,8 @@ it('reponds with user details', async () => {
   expect(reponse.body.user.email).toEqual('jojo@test.com');
 });
 
-it('responds with 401 incase of not logged in', async () => {
-  await request(app).get('/api/users/currentuser').send().expect(401);
+it('responds with null incase of not logged in', async () => {
+  const response = await request(app).get('/api/users/currentuser').send();
+
+  expect(response.body.user).toEqual(null);
 });
