@@ -2,8 +2,7 @@ import axios from 'axios';
 
 const _serverClient = (req) => {
   return axios.create({
-    baseURL:
-      'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local/api',
+    baseURL: 'http://ticketing.gq/api',
     headers: req.headers,
   });
 };
