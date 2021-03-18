@@ -11,7 +11,7 @@ const start = async () => {
 
   for (let key of envKeys) {
     if (!process.env[key]) {
-      throw new Error(`[${key}] not found`);
+      throw new Error(`[${key}] not found.`);
     }
   }
 

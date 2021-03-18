@@ -23,7 +23,9 @@ const Header = ({ user }) => {
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
         <Link href="/">
-          <a className="navbar-brand">GitTix</a>
+          <a className="navbar-brand" translate="no">
+            GitTix
+          </a>
         </Link>
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav ml-auto">{links}</ul>

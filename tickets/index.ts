@@ -45,7 +45,7 @@ const start = async () => {
       useCreateIndex: true,
     });
 
-    console.log('[info] DB connection open.');
+    console.log('[info] DB connection open..');
   } catch (err) {
     console.log(err);
   }
