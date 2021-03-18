@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const _serverClient = (req) => {
   return axios.create({
-    baseURL: 'https://www.ticketing.gq/api',
+    baseURL: 'http://www.ticketing.gq/api',
     headers: req.headers,
   });
 };
