@@ -29,27 +29,3 @@ spec:
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/component: controller
-  rules:
-    - host: www.ticketing.gq
-      http:
-        paths:
-          - path: /api/payments/?(.*)
-            backend:
-              serviceName: payments-service
-              servicePort: 3000
-          - path: /api/orders/?(.*)
-            backend:
-              serviceName: orders-service
-              servicePort: 3000
-          - path: /api/tickets/?(.*)
-            backend:
-              serviceName: tickets-service
-              servicePort: 3000
-          - path: /api/users/?(.*)
-            backend:
-              serviceName: auth-service
-              servicePort: 3000
-          - path: /?(.*)
-            backend:
-              serviceName: client-service
-              servicePort: 3000
