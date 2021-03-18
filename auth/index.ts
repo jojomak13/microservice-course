@@ -15,7 +15,7 @@ const start = async () => {
       useCreateIndex: true,
     });
 
-    console.log('DB Connection Done!!');
+    console.log('DB Connection Done.');
   } catch (err) {
     console.log(err);
   }
